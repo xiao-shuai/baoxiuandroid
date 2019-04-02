@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import {Home,Me,HomeDetail} from '../component/index'
+import {Home,Me,HomeDetail,Message} from '../component/index'
 import { 
      createBottomTabNavigator,
      createAppContainer,
@@ -30,18 +30,26 @@ const BottomTab=createBottomTabNavigator(
                   iconName='ios-person'
               }
               return <Ionicons name={iconName} size={horizontal ? 20 : 25} 
-          color={focused?sty.themetitle:sty.themeColor} />;
+          color={focused?sty.themehui:sty.themeColor} />;
          }
      }),
      tabBarOptions: {
-        activeTintColor:sty.themetitle,
+        activeTintColor:sty.themehui,
         inactiveTintColor:sty.themeColor,
       },
     }
 )
 const AllStack=createStackNavigator({
-     Btm:{
-        screen:BottomTab,
+    //  Btm:{
+    //     screen:BottomTab,
+    //     navigationOptions:()=>({
+    //         header:null,
+    //         headerBackTitle:null,
+    //     })
+    //  },
+
+     Home:{
+        screen:Home,
         navigationOptions:()=>({
             header:null,
             headerBackTitle:null,
@@ -50,10 +58,23 @@ const AllStack=createStackNavigator({
      HomeDetail:{
        screen:HomeDetail,
        navigationOptions:()=>({
-        // header:null,
-        // headerBackTitle:null,
+        title:'我的',
+        headerTintColor:'white',
+         headerStyle: {
+          backgroundColor:sty.themeColor,
+        },
     })
-     }
+     },
+     Message:{
+      screen:Message,
+      navigationOptions:()=>({
+         title:'我的消息',
+         headerTintColor:'white',
+         headerStyle: {
+          backgroundColor:sty.themeColor,
+        },
+   })
+    }
     
 })
 

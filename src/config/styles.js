@@ -4,7 +4,13 @@ const { width, height } = Dimensions.get('window')
 export const sty={
     w:width,
     h:height,   
-    themeColor:"#5B5B5B",
-    themefont:'#FFFFFF',
-    themetitle:'#00CED1', 
+    themeColor:"#FFA500",
+    themehui:'#D3D3D3',
+    themehui2:'#808080',
+    contain:{
+        flex:1,
+        width:width,
+        alignItems:'center',
+       
+    }
 }
