@@ -11,6 +11,6 @@ export const sty={
         flex:1,
         width:width,
         alignItems:'center',
-       
+        // backgroundColor:'#D3D3D3'
     }
 }

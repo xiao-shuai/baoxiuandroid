@@ -17,8 +17,9 @@ class Me extends  Component{
   render(){
       return(
           <SafeAreaView style={{flex:1}}>
-          
+          <View style={{}}>
 
+          </View>
           </SafeAreaView>
       )
   }

@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import {Home,Me,HomeDetail,Message} from '../component/index'
+import {Home,Me,HomeDetail,Message,ZhiJie,JiaDian,FenLei} from '../component/index'
 import { 
      createBottomTabNavigator,
      createAppContainer,
@@ -69,6 +69,36 @@ const AllStack=createStackNavigator({
       screen:Message,
       navigationOptions:()=>({
          title:'我的消息',
+         headerTintColor:'white',
+         headerStyle: {
+          backgroundColor:sty.themeColor,
+        },
+   })
+    },
+    ZhiJie:{
+      screen:ZhiJie,
+      navigationOptions:()=>({
+         title:'快修',
+         headerTintColor:'white',
+         headerStyle: {
+          backgroundColor:sty.themeColor,
+        },
+   })
+    },
+    JiaDian:{
+      screen:JiaDian,
+      navigationOptions:()=>({
+         title:'快修',
+         headerTintColor:'white',
+         headerStyle: {
+          backgroundColor:sty.themeColor,
+        },
+   })
+    },
+    FenLei:{
+      screen:FenLei,
+      navigationOptions:()=>({
+         title:'分类快修',
          headerTintColor:'white',
          headerStyle: {
           backgroundColor:sty.themeColor,
