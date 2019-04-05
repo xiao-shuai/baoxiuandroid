@@ -56,7 +56,22 @@ class ZhiJie extends Component{
         
         }
    }
+   getdate=()=>{
+    const date = new Date();
 
+    const year = date.getFullYear().toString();
+    const month = (date.getMonth()+1).toString();
+    const day = date.getDate().toString();
+    // var hour =  date.getHours().toString();
+    // var minute = date.getMinutes().toString();
+    const final=year+'-'+month+'-'+day
+    this.setState({date:final})
+   
+   }
+componentWillMount(){
+  this.getdate()
+
+}
    render(){
        return(
        <SafeAreaView style={{flex:1,alignItems:'center'}}>

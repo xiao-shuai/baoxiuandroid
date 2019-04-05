@@ -31,7 +31,8 @@ class Home extends  Component{
           {/* top */}
            <View style={styles.top}>
            <TouchableOpacity onPress={()=>{
-             this.props.navigation.navigate('HomeDetail')
+            //  this.props.navigation.navigate('HomeDetail')
+            this.props.navigation.openDrawer()
            }}>
             <Ionicons name={'ios-options'} size={30}/>
           </TouchableOpacity>

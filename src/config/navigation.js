@@ -1,11 +1,25 @@
 import React,{Component} from 'react'
-import {Home,Me,HomeDetail,Message,ZhiJie,JiaDian,FenLei} from '../component/index'
+import {Home,Me,
+  HomeDetail,Message,
+  ZhiJie,JiaDian,FenLei,
+ Contact,FeedBack
+} from '../component/index'
 import { 
      createBottomTabNavigator,
      createAppContainer,
-     createStackNavigator } from 'react-navigation';
+     createStackNavigator ,
+     createDrawerNavigator,
+     SafeAreaView
+    } from 'react-navigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {sty} from './styles'
+import LinearGradient from 'react-native-linear-gradient';
+import {
+  View,Text,
+  TouchableOpacity,
+  Image
+  ,ScrollView,StyleSheet,
+  ActivityIndicator} from 'react-native'
 
 const BottomTab=createBottomTabNavigator(
     {
@@ -39,6 +53,55 @@ const BottomTab=createBottomTabNavigator(
       },
     }
 )
+
+const Diy=(props)=>{
+  return (
+    <LinearGradient colors={['#40E0D0','#FF8C00','#FF0080']}>
+     <ScrollView>
+       <SafeAreaView style={{flex:1}}>
+       <View
+          style={{width:'100%',height:50,paddingLeft:16,justifyContent:'center'}}>
+          <Text style={{fontSize:20,fontWeight:'500',color:'#ccc'}}>Main Menu</Text>
+        </View>
+        {
+          ['Contact',"FeedBack"].map((item,index)=>{
+          <TouchableOpacity onPress={()=>{
+            props.navigation.navigate(item)
+            props.navigation.closeDrawer()
+          }}
+          style={{width:'100%',height:50,paddingLeft:16,justifyContent:'center'}}>
+
+    <Text style={{fontSize:18,fontWeight:'500',color:props.activeItemKey===item?'rgb(251,80,85)':'#fff'}}>{item}</Text>
+          </TouchableOpacity>
+          })
+        }
+       </SafeAreaView>
+     </ScrollView>
+</LinearGradient>
+  )
+}
+const Drawer=createDrawerNavigator(
+  {
+    Home:{
+      screen:Home,
+      navigationOptions:()=>({
+          header:null,
+          headerBackTitle:null,
+      })
+   },
+    Contact:{
+     screen:Contact
+   } ,
+   FeedBack:{
+     screen:FeedBack
+   }
+  },
+  {
+    drawerWidth:sty.w*.7,
+    drawerPosition:'left',
+    contentComponent:Diy,
+  }
+  )
 const AllStack=createStackNavigator({
     //  Btm:{
     //     screen:BottomTab,
@@ -47,14 +110,15 @@ const AllStack=createStackNavigator({
     //         headerBackTitle:null,
     //     })
     //  },
-
-     Home:{
-        screen:Home,
-        navigationOptions:()=>({
-            header:null,
-            headerBackTitle:null,
-        })
-     },
+    Drawer:{
+      screen:Drawer,
+      navigationOptions:(navigation)=>({
+        header:null,
+        headerBackTitle:null,
+    })
+    },
+     
+     
      HomeDetail:{
        screen:HomeDetail,
        navigationOptions:()=>({

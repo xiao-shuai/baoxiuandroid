@@ -5,6 +5,8 @@ import  Message from './home/Message'
 import ZhiJie from './home/ZhiJie'
 import FenLei from './home/FenLei'
 import JiaDian from './home/JiaDian'
+import Contact from './me/Contact'
+import FeedBack from './me/FeedBack'
 export {
     Home,
     Me,
@@ -12,5 +14,7 @@ export {
     Message,
     ZhiJie,
     FenLei,
-    JiaDian
+    JiaDian,
+    Contact,
+    FeedBack
 }
