@@ -72,6 +72,52 @@ componentWillMount(){
   this.getdate()
 
 }
+choosePicker = () => {
+  ImagePicker.showImagePicker(this.option, (response) => {
+    console.log('Response = ', response);
+    if (response.didCancel) {
+      console.log('User cancelled image picker');
+    }
+    else if (response.error) {
+      console.log('ImagePicker Error: ', response.error);
+    }
+    else if (response.customButton) {
+      console.log('User tapped custom button: ', response.customButton);
+    }
+    else {
+      console.log('source--!!')
+      let source = response.uri;
+      // this.props.oneStore.change_tx(source)
+      this.setState({
+        iscover: true,
+        bximg:source,
+      })
+    }
+  });
+}
+choosePicker2 = () => {
+  ImagePicker.showImagePicker(this.option, (response) => {
+    console.log('Response = ', response);
+    if (response.didCancel) {
+      console.log('User cancelled image picker');
+    }
+    else if (response.error) {
+      console.log('ImagePicker Error: ', response.error);
+    }
+    else if (response.customButton) {
+      console.log('User tapped custom button: ', response.customButton);
+    }
+    else {
+      console.log('source--!!')
+      let source = response.uri;
+      // this.props.oneStore.change_tx(source)
+      this.setState({
+        iscover2: true,
+        bximg2:source,
+      })
+    }
+  });
+}
    render(){
        return(
        <SafeAreaView style={{flex:1,alignItems:'center'}}>
@@ -119,17 +165,62 @@ componentWillMount(){
         </View>
         <Divider style={{backgroundColor:sty.themehui,height:1,marginTop:10}}/>
         {/* input */}
-        <View style={{padding:10,backgroundColor:sty.themehui,marginTop:10,borderRadius:8}}>
-         <TextInput multiline={true} style={{height:sty.h*.25,fontSize:18}} 
-         placeholder={'请输如需保修的信息'} placeholderTextColor={'red'} />
+        <View style={{padding:10,backgroundColor:'#F0F8FF',marginTop:10,borderRadius:8}}>
+         <TextInput multiline={true} style={{height:sty.h*.25,fontSize:16}} 
+         placeholder={'请输如需要保修的信息'} placeholderTextColor={'red'} />
         </View>
-
+        <Divider style={{backgroundColor:sty.themehui,height:1,marginTop:10}}/>
+        {/* image */}
+        <Text style={{marginTop:10,fontSize:18,}}>上传图片</Text>
+        <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:10}}>
+        <TouchableOpacity onPress={()=>{
+         this.choosePicker()
+        }} style={styles.touimg}>
+{
+  this.state.iscover?
+  <Image source={{uri:this.state.bximg}} style={{width:'100%',height:'100%'}}/>
+  :
+  <View style={styles.v_jia}>
+  <Text style={styles.v_text}>+</Text>
+  </View>
+}
+        </TouchableOpacity>
+         
+        <TouchableOpacity onPress={()=>{
+  this.choosePicker2()
+}} style={styles.touimg}>
+{
+this.state.iscover2?
+<Image source={{uri:this.state.bximg2}} style={{width:'100%',height:'100%'}}/>
+:
+<View style={styles.v_jia}>
+  <Text style={styles.v_text}>+</Text>
+  </View>
+}
+</TouchableOpacity>
+</View>
+<Divider style={{backgroundColor:sty.themehui,height:1,marginTop:10}}/>
+{/*  */}
+ <View style={{flexDirection:'row',marginTop:10}}>
+            <Text style={{fontSize:18,}}>所在城市 :</Text>
+            <Text style={{fontSize:18,marginLeft:10}}>北京市</Text>
+   </View>
+        
         </ScrollView>
        </SafeAreaView>
        )
    }
 }
 const styles = StyleSheet.create({
+  v_text:{
+    fontSize:sty.w*.25,color:sty.themehui,fontWeight:'300'
+  },
+  v_jia:{
+    alignItems:'center',justifyContent:'center',width:'100%',height:'100%'
+  },
+  touimg:{
+    width:sty.w*.45,height:sty.w*.45,backgroundColor:'#F0F8FF'
+  },
     textStyle:{
       fontSize:18,
     },
