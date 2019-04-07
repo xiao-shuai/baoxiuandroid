@@ -19,7 +19,7 @@ import Swiper from 'react-native-swiper';
 import ImagePicker from 'react-native-image-picker'
 import Picker from 'react-native-picker';
 import DatePicker from 'react-native-datepicker'
-
+import Toast, {DURATION} from 'react-native-easy-toast'
 @inject(["homeStore"])
 @observer // 监听当前组件
 class ZhiJie extends Component{
@@ -119,10 +119,24 @@ choosePicker2 = () => {
   });
 }
    render(){
+     const type=this.props.navigation.getParam('info')
+     const name=this.props.navigation.getParam('name')
+     
+     console.log('type--!',type)
        return(
        <SafeAreaView style={{flex:1,alignItems:'center'}}>
-        <ScrollView style={{width:sty.w*.95,}}>
-
+        <ScrollView style={{width:sty.w*.95,}} showsVerticalScrollIndicator={false}>
+{/* city */}
+      <View>
+        <View style={{marginTop:15,flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
+        <View style={{flexDirection:'row'}}>
+            <Text style={{fontSize:18,}}>维修类型 :</Text>
+            <Text style={{fontSize:18,marginLeft:10}}>{name}</Text>
+        </View>
+        {/* <Ionicons name={'ios-arrow-forward'} size={25} color={sty.themehui2}/> */}
+        </View>
+        <Divider style={{backgroundColor:sty.themehui,height:1,marginTop:10}}/> 
+    </View>
         {/* city */}
         <View style={{marginTop:15,flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
         <View style={{flexDirection:'row'}}>
@@ -130,6 +144,13 @@ choosePicker2 = () => {
             <Text style={{fontSize:18,marginLeft:10}}>北京市</Text>
         </View>
         <Ionicons name={'ios-arrow-forward'} size={25} color={sty.themehui2}/>
+        </View>
+        <Divider style={{backgroundColor:sty.themehui,height:1,marginTop:10}}/>
+        {/* 地址 */}
+        <View style={{flexDirection:'row',marginTop:10}}>
+            <Text style={{fontSize:18,}}>上门地址 :</Text>
+            {/* <Text style={{fontSize:18,marginLeft:10}}>北京市</Text> */}
+            <TextInput style={styles.input} placeholder="请输入详细地址" multiline={true}/>
         </View>
         <Divider style={{backgroundColor:sty.themehui,height:1,marginTop:10}}/>
         <Text style={{textAlign:'center',marginTop:5,color:sty.themehui2}}>(目前仅支持北京市,后续开放其他城市)</Text>
@@ -167,7 +188,7 @@ choosePicker2 = () => {
         {/* input */}
         <View style={{padding:10,backgroundColor:'#F0F8FF',marginTop:10,borderRadius:8}}>
          <TextInput multiline={true} style={{height:sty.h*.25,fontSize:16}} 
-         placeholder={'请输如需要保修的信息'} placeholderTextColor={'red'} />
+         placeholder={'请输如需要保修的信息'} />
         </View>
         <Divider style={{backgroundColor:sty.themehui,height:1,marginTop:10}}/>
         {/* image */}
@@ -202,16 +223,56 @@ this.state.iscover2?
 <Divider style={{backgroundColor:sty.themehui,height:1,marginTop:10}}/>
 {/*  */}
  <View style={{flexDirection:'row',marginTop:10}}>
-            <Text style={{fontSize:18,}}>所在城市 :</Text>
-            <Text style={{fontSize:18,marginLeft:10}}>北京市</Text>
+            <Text style={{fontSize:18,}}>姓            名 :</Text>
+            <TextInput style={[styles.input,{width:sty.w*.6}]} multiline={true} placeholder={'请输入姓名'}/>
    </View>
-        
+   <Divider style={{backgroundColor:sty.themehui,height:1,marginTop:10}}/>
+   {/*  */}
+   <View style={{flexDirection:'row',marginTop:10}}>
+            <Text style={{fontSize:18,}}>上门联系人 :</Text>
+            <TextInput style={[styles.input,{width:sty.w*.6}]} multiline={true} placeholder={'请输入联系信息'}/>
+           
+   </View>
+    {/*  */}
+    <Divider style={{backgroundColor:sty.themehui,height:1,marginTop:10}}/>
+    <View style={{flexDirection:'row',marginTop:10}}>
+            <Text style={{fontSize:18,}}>愿 付 酬 劳  :</Text>
+            <TextInput style={[styles.input,{width:sty.w*.6}]} multiline={true} placeholder={'请输入联系信息'}/>
+           
+   </View>
+   {/*  */}
+   <Divider style={{backgroundColor:sty.themehui,height:1,marginTop:10}}/>
+   <TouchableOpacity onPress={()=>{
+this.refs.toast.show('目前仅支持线下支付',1000);
+   }}>
+    <View style={{flexDirection:'row',marginTop:10}}>
+            <Text style={{fontSize:18,}}>支 付 方 式  :</Text>
+            <Text style={[styles.input,{width:sty.w*.6}]} >线 下 支 付</Text>
+            <Ionicons name={'ios-arrow-forward'} size={25} color={sty.themehui2}/>
+   </View>
+   </TouchableOpacity>
+   {/* 提交 btn */}
+   <Divider style={{backgroundColor:sty.themehui,height:1,marginTop:10}}/>
+   <TouchableOpacity onPress={()=>{
+     
+   }} style={styles.tj_btn}>
+      <Text style={{fontSize:20,color:'white',fontWeight:'600'}}>提 交</Text>
+   </TouchableOpacity>
         </ScrollView>
+        <Toast ref="toast" position='top' opacity={0.7} />
        </SafeAreaView>
        )
    }
 }
 const styles = StyleSheet.create({
+  tj_btn:{
+    width:'100%',height:sty.h*.06,
+    backgroundColor:sty.themeColor,
+    marginTop:10,borderRadius:10,
+    marginBottom:10,alignItems:'center',
+    justifyContent:'center'
+  },
+  input:{fontSize:18,marginLeft:10,width:'70%'},
   v_text:{
     fontSize:sty.w*.25,color:sty.themehui,fontWeight:'300'
   },

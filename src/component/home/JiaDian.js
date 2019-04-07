@@ -21,7 +21,7 @@ class JiaDian extends Component{
    constructor(props){
        super(props)
        this.state={
-
+           
        }
    }
 
@@ -29,7 +29,7 @@ class JiaDian extends Component{
    render(){
        return(
        <SafeAreaView style={{flex:1,alignItems:'center'}}>
-
+            
        </SafeAreaView>
        )
    }

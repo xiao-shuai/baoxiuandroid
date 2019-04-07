@@ -1,13 +1,14 @@
 import React,{Component} from 'react'
 import {View,Text,TouchableOpacity,Image
-    ,ScrollView,StyleSheet,ActivityIndicator} from 'react-native'
+    ,ScrollView,StyleSheet,ActivityIndicator,Linking} from 'react-native'
 
 import {observable} from 'mobx'
 import { SafeAreaView } from 'react-navigation';
-import { Divider } from 'react-native-elements'
+import { Divider ,ListItem} from 'react-native-elements'
 import {inject,observer} from 'mobx-react'
 import {sty} from '../../config/styles'
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import LinearGradient from 'react-native-linear-gradient';
 class HomeDetail  extends Component{
    
     constructor(props){
@@ -15,11 +16,77 @@ class HomeDetail  extends Component{
         this.state={
 
         }
+        this.option=[
+            {
+                name:'我的订单',
+                icon:'ios-list-box',
+                xia:'MyOrder',
+            },
+            {
+                name:'意见反馈',
+                icon:'ios-chatboxes',
+                xia:'FeedBack',
+            },
+            {
+                name:'联系我们',
+                icon:'ios-call',
+                xia:'Contact',
+            },
+
+        ]
+        
     }
     render(){
         return(
-       <SafeAreaView>
-          <Text>HomeDetail</Text>
+       <SafeAreaView style={sty.contain}>
+         <ScrollView contentContainerStyle={{width:sty.w,alignItems:'center'}}>
+           {/* <LinearGradient colors={['#F2994A','#F2C94C']}> */}
+            <View style={{width:'100%',height:sty.h*.25,alignItems:'center',justifyContent:'center'}}>
+            <Image source={require('../../img/logo.png')} style={{width:sty.w*.8,height:sty.w*.8}} resizeMode="contain"/>
+            </View>
+           {/* </LinearGradient> */}
+           {/*  */}
+         <Divider style={{width:sty.w,height:20,backgroundColor:'#E6E6FA'}} />  
+         <View style={{width:'100%',alignItems:'center'}}>
+         {
+             this.option.map((item,index)=>{
+                 return(
+                     
+          <TouchableOpacity style={{
+          width:'100%',
+          marginTop:10,
+          justifyContent:'center',
+          padding:10,
+          borderBottomWidth:index==0?20:1,
+          borderBottomColor:'#E6E6FA',
+          flexDirection:'row',
+          justifyContent:'space-between'
+          }}  onPress={()=>{
+              if(index==2){
+                let url = "tel: (021)5033 4587";//调用拨号
+                Linking.canOpenURL(url).then(supported => {
+                  if (supported) {
+                      Linking.openURL(url);
+                  }
+                });
+              }else {
+            this.props.navigation.navigate(item.xia)
+              }
+          }}>
+
+         <View style={{flexDirection:'row',alignItems:'center',}}>
+             <Ionicons name={item.icon} size={30} color={sty.themeColor}/>
+             <Text style={{marginLeft:10,fontSize:18}}>{item.name}</Text>
+             
+         </View>
+         <Ionicons name={'ios-arrow-forward'} size={25} style={{color:sty.themehui}}/>
+          </TouchableOpacity>
+                 )
+             })
+         }
+         </View>
+          
+         </ScrollView>
       </SafeAreaView>
         )
     }

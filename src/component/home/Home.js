@@ -31,13 +31,13 @@ class Home extends  Component{
           {/* top */}
            <View style={styles.top}>
            <TouchableOpacity onPress={()=>{
-            //  this.props.navigation.navigate('HomeDetail')
-            this.props.navigation.openDrawer()
+             this.props.navigation.navigate('HomeDetail')
+            // this.props.navigation.openDrawer()
            }}>
             <Ionicons name={'ios-options'} size={30}/>
           </TouchableOpacity>
          
-            <Text style={{fontSize:25,color:sty.themeColor}}>标题</Text>
+            <Text style={{fontSize:25,color:sty.themeColor}}>快修</Text>
       
             <TouchableOpacity onPress={()=>{
               this.props.navigation.navigate('Message')
@@ -54,10 +54,10 @@ class Home extends  Component{
           
           <Swiper style={{marginTop:10}} autoplay={true} loop={true} height={200}> 
           <View style={styles.slide}>
-          <Image source={require('../../img/lunbo2.jpg')} style={styles.image} resizeMode='stretch'/>
+          <Image source={require('../../img/1.png')} style={styles.image} resizeMode='stretch'/>
           </View>
            <View style={styles.slide}>
-           <Image source={require('../../img/lunbo.jpg')} style={styles.image} resizeMode='stretch'/>
+           <Image source={require('../../img/2.png')} style={styles.image} resizeMode='stretch'/>
            </View>
            
           </Swiper>
@@ -66,7 +66,7 @@ class Home extends  Component{
            <TouchableOpacity style={{
           width:'48%',height:sty.h*.5,
           }} onPress={()=>{
-            this.props.navigation.navigate('ZhiJie')
+            this.props.navigation.navigate('ZhiJie',{name:'直接下单'})
           }}>
            <LinearGradient 
           colors={['#FDC830', '#F37335']} 
@@ -94,7 +94,7 @@ class Home extends  Component{
 </LinearGradient>
 </TouchableOpacity>
 <TouchableOpacity style={{height:sty.h*.24,}} onPress={()=>{
-  this.props.navigation.navigate('JiaDian')
+  this.props.navigation.navigate('ZhiJie',{name:'家电清洗'})
 }}>
 <LinearGradient colors={['#7F7FD5','#86A8E7','#91EAE4']} >
  <View style={{alignItems:'center',justifyContent:'center',height:'100%'}}>
