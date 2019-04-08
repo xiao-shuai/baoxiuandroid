@@ -7,6 +7,7 @@ import FenLei from './home/FenLei'
 import JiaDian from './home/JiaDian'
 import Contact from './me/Contact'
 import FeedBack from './me/FeedBack'
+import MyOrder from './me/MyOrder'
 export {
     Home,
     Me,
@@ -16,5 +17,6 @@ export {
     FenLei,
     JiaDian,
     Contact,
-    FeedBack
+    FeedBack,
+    MyOrder
 }

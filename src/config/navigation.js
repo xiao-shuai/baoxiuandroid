@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import {Home,Me,
   HomeDetail,Message,
   ZhiJie,JiaDian,FenLei,
- Contact,FeedBack
+ Contact,FeedBack,MyOrder
 } from '../component/index'
 import { 
      createBottomTabNavigator,
@@ -89,12 +89,7 @@ const Drawer=createDrawerNavigator(
           headerBackTitle:null,
       })
    },
-    Contact:{
-     screen:Contact
-   } ,
-   FeedBack:{
-     screen:FeedBack
-   }
+
   },
   {
     drawerWidth:sty.w*.7,
@@ -167,7 +162,41 @@ const AllStack=createStackNavigator({
          headerStyle: {
           backgroundColor:sty.themeColor,
         },
+        
    })
+    },
+    MyOrder:{
+      screen:MyOrder,
+      navigationOptions:()=>({
+         title:'我的订单',
+         headerTintColor:'white',
+         headerStyle: {
+          backgroundColor:sty.themeColor,
+        },
+        
+   })
+    },
+    Contact:{
+      screen:Contact,
+      navigationOptions:()=>({
+        title:'联系我们',
+        headerTintColor:'white',
+        headerStyle: {
+         backgroundColor:sty.themeColor,
+       },
+       
+  })
+    } ,
+    FeedBack:{
+      screen:FeedBack,
+      navigationOptions:()=>({
+        title:'我的反馈',
+        headerTintColor:'white',
+        headerStyle: {
+         backgroundColor:sty.themeColor,
+       },
+       
+  })
     }
     
 })

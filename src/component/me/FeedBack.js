@@ -3,8 +3,9 @@ import {View,Text,TouchableOpacity,Image
     ,ScrollView,StyleSheet,ActivityIndicator} from 'react-native'
 import {inject,observer} from 'mobx-react'
 import {observable} from 'mobx'
-import { SafeAreaView } from 'react-navigation';
+import { SafeAreaView } from 'react-navigation'
 import { Divider } from 'react-native-elements'
+import {sty} from '../../config/styles'
 
 class FeedBack extends  Component{
     constructor(props){
@@ -16,10 +17,11 @@ class FeedBack extends  Component{
 
   render(){
       return(
-          <SafeAreaView style={{flex:1}}>
-          <View style={{}}>
-
-          </View>
+          <SafeAreaView style={sty.contain}>
+          <ScrollView>
+         <Text>FeedBack</Text>
+          </ScrollView>
+         
           </SafeAreaView>
       )
   }

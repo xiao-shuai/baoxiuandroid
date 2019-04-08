@@ -5,7 +5,7 @@ import {inject,observer} from 'mobx-react'
 import {observable} from 'mobx'
 import { SafeAreaView } from 'react-navigation';
 import { Divider } from 'react-native-elements'
-
+import {sty} from '../../config/styles'
 class Contact extends  Component{
     constructor(props){
         super(props)
@@ -16,9 +16,9 @@ class Contact extends  Component{
 
   render(){
       return(
-          <SafeAreaView style={{flex:1}}>
+          <SafeAreaView style={sty.contain}>
           <View style={{}}>
-
+            <Text>Contact</Text>
           </View>
           </SafeAreaView>
       )
