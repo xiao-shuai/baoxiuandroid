@@ -8,6 +8,7 @@ import JiaDian from './home/JiaDian'
 import Contact from './me/Contact'
 import FeedBack from './me/FeedBack'
 import MyOrder from './me/MyOrder'
+import Login from './Login'
 export {
     Home,
     Me,
@@ -18,5 +19,6 @@ export {
     JiaDian,
     Contact,
     FeedBack,
-    MyOrder
+    MyOrder,
+    Login
 }

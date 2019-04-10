@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import {Home,Me,
   HomeDetail,Message,
   ZhiJie,JiaDian,FenLei,
- Contact,FeedBack,MyOrder
+ Contact,FeedBack,MyOrder,Login
 } from '../component/index'
 import { 
      createBottomTabNavigator,
@@ -187,6 +187,13 @@ const AllStack=createStackNavigator({
        
   })
     } ,
+    Login:{
+      screen:Login,
+      navigationOptions:()=>({
+        header:null,
+        headerBackTitle:null,  
+  })
+    } ,
     FeedBack:{
       screen:FeedBack,
       navigationOptions:()=>({
@@ -194,7 +201,7 @@ const AllStack=createStackNavigator({
         headerTintColor:'white',
         headerStyle: {
          backgroundColor:sty.themeColor,
-       },
+       },  
        
   })
     }

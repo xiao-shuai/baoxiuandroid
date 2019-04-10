@@ -1,12 +1,16 @@
 import React,{Component} from 'react'
 import {
-    View,Text,
+    View,
+    Text,
     TouchableOpacity,
-    Image
-    ,ScrollView,StyleSheet,
-    ActivityIndicator} from 'react-native'
+    Image,
+    ScrollView,
+    StyleSheet,
+    ActivityIndicator,
+    AsyncStorage
+  } from 'react-native'
 import {observable} from 'mobx'
-import { SafeAreaView } from 'react-navigation';
+import { SafeAreaView ,NavigationActions} from 'react-navigation';
 import { Divider } from 'react-native-elements'
 import {inject,observer} from 'mobx-react'
 import {sty} from '../../config/styles'
@@ -23,7 +27,17 @@ class Home extends  Component{
 
         }
     }
-
+componentWillMount(){
+  AsyncStorage.getItem('dl').then(res=>{
+   console.log('qqqq!!',res)
+   if(res==null){
+    this.props.navigation.reset([NavigationActions.navigate({ routeName: 'Login' })], 0)
+   }
+  }
+  ).catch(err=>{
+   console.log('err!!',err)
+  })
+}
   render(){
       console.log('666---!',this.props.homeStore.text)
       return(

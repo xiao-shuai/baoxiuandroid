@@ -23,11 +23,16 @@ import Toast, {DURATION} from 'react-native-easy-toast'
 @inject(["homeStore"])
 @observer // 监听当前组件
 class ZhiJie extends Component{
+  static navigationOptions = {
+    // title: 'Home',
+    headerBackTitle:null,
+  };
    constructor(props){
        super(props)
        this.state={
         iscover:false,
-        date:""
+        date:"",
+        order:[]
        }
 
        this.option={
@@ -69,6 +74,7 @@ class ZhiJie extends Component{
    
    }
 componentWillMount(){
+ 
   this.getdate()
 
 }
@@ -118,10 +124,50 @@ choosePicker2 = () => {
     }
   });
 }
+
+submit=()=>{
+  const name=this.props.navigation.getParam('name')
+  const random = Math.floor(Math.random() * 999999999999999)
+  console.log(
+    '类型',name,
+    'dz',this.state.dz,
+    'time',this.state.date,
+     'bxinfo',this.state.bxinfo,
+     'xm',this.state.xm,
+     'phone',this.state.phone,
+     'money',this.state.money,
+  )
+  let data={
+      'status':0,
+      'lx':name,
+      'dz':this.state.dz,
+      'time':this.state.date,
+      'bxinfo':this.state.bxinfo,
+      'xm':this.state.xm,
+      'phone':this.state.phone,
+      'money':this.state.money,
+      'ddh':random
+  }
+ 
+  if(this.state.dz==undefined||this.state.bxinfo==undefined||this.state.xm==undefined||this.state.phone==undefined||this.state.money==undefined){
+      this.refs.toast.show('请输入完整信息',1500)
+  }else{
+      if(this.state.phone.length!==11){
+        this.refs.toast.show('请输入正确的手机号码',1500)
+      }else{
+        //  this.state.order.push(data)
+         this.props.homeStore.updateorder(data)
+         this.props.navigation.navigate('MyOrder')
+        this.refs.toast.show('预约成功',1500)
+      }
+  }
+
+}
    render(){
+    console.log(
+    'order---!',this.props.homeStore.order,)
      const type=this.props.navigation.getParam('info')
      const name=this.props.navigation.getParam('name')
-     
      console.log('type--!',type)
        return(
        <SafeAreaView style={{flex:1,alignItems:'center'}}>
@@ -138,26 +184,34 @@ choosePicker2 = () => {
         <Divider style={{backgroundColor:sty.themehui,height:1,marginTop:10}}/> 
     </View>
         {/* city */}
+        <TouchableOpacity onPress={()=>{
+         this.refs.toast.show('目前仅支持北京市',1000)
+        }}>
         <View style={{marginTop:15,flexDirection:'row',justifyContent:'space-between',alignItems:'center'}}>
-        <View style={{flexDirection:'row'}}>
+        
+        <View style={{flexDirection:'row'}} >
             <Text style={{fontSize:18,}}>所在城市 :</Text>
             <Text style={{fontSize:18,marginLeft:10}}>北京市</Text>
         </View>
+
         <Ionicons name={'ios-arrow-forward'} size={25} color={sty.themehui2}/>
-        </View>
+        </View> 
+         </TouchableOpacity>
         <Divider style={{backgroundColor:sty.themehui,height:1,marginTop:10}}/>
         {/* 地址 */}
         <View style={{flexDirection:'row',marginTop:10}}>
             <Text style={{fontSize:18,}}>上门地址 :</Text>
             {/* <Text style={{fontSize:18,marginLeft:10}}>北京市</Text> */}
-            <TextInput style={styles.input} placeholder="请输入详细地址" multiline={true}/>
+            <TextInput style={styles.input} placeholder="请输入详细地址" multiline={true} onChangeText={(dz)=>{
+            this.setState({dz})
+            }}/>
         </View>
         <Divider style={{backgroundColor:sty.themehui,height:1,marginTop:10}}/>
         <Text style={{textAlign:'center',marginTop:5,color:sty.themehui2}}>(目前仅支持北京市,后续开放其他城市)</Text>
          {/* time */}
          <View style={{marginTop:15,flexDirection:'row',alignItems:'center'}}>
         
-            <Text style={{fontSize:18,}}>所在城市 :</Text>
+            <Text style={{fontSize:18,}}>预约时间 :</Text>
             <DatePicker
         style={{width: 200}}
         date={this.state.date}
@@ -166,8 +220,8 @@ choosePicker2 = () => {
         format="YYYY-MM-DD"
         minDate="2018-05-01"
         maxDate="2020-06-01"
-        confirmBtnText="Confirm"
-        cancelBtnText="Cancel"
+        confirmBtnText="确定"
+        cancelBtnText="取消"
         customStyles={{
           dateIcon: {
             position: 'absolute',
@@ -188,7 +242,9 @@ choosePicker2 = () => {
         {/* input */}
         <View style={{padding:10,backgroundColor:'#F0F8FF',marginTop:10,borderRadius:8}}>
          <TextInput multiline={true} style={{height:sty.h*.25,fontSize:16}} 
-         placeholder={'请输如需要保修的信息'} />
+         placeholder={'请输如需要保修的信息'}  onChangeText={(bxinfo)=>{
+          this.setState({bxinfo})
+         }}/>
         </View>
         <Divider style={{backgroundColor:sty.themehui,height:1,marginTop:10}}/>
         {/* image */}
@@ -224,24 +280,41 @@ this.state.iscover2?
 {/*  */}
  <View style={{flexDirection:'row',marginTop:10}}>
             <Text style={{fontSize:18,}}>姓            名 :</Text>
-            <TextInput style={[styles.input,{width:sty.w*.6}]} multiline={true} placeholder={'请输入姓名'}/>
+            <TextInput style={[styles.input,{width:sty.w*.6}]} 
+             multiline={true}
+             placeholder={'请输入姓名'} 
+            onChangeText={(xm)=>{
+            this.setState({xm})
+            }}/>
    </View>
    <Divider style={{backgroundColor:sty.themehui,height:1,marginTop:10}}/>
    {/*  */}
-   <View style={{flexDirection:'row',marginTop:10}}>
-            <Text style={{fontSize:18,}}>上门联系人 :</Text>
-            <TextInput style={[styles.input,{width:sty.w*.6}]} multiline={true} placeholder={'请输入联系信息'}/>
+   <View style={styles.line}>
+            <Text style={{fontSize:18,}}>联 系 方 式 :</Text>
+            <TextInput style={[styles.input,{width:sty.w*.6}]} 
+            // multiline={true} 
+            placeholder={'请输入联系信息'}
+            onChangeText={(phone)=>{
+                this.setState({phone})
+            }}
+            />
            
    </View>
     {/*  */}
-    <Divider style={{backgroundColor:sty.themehui,height:1,marginTop:10}}/>
-    <View style={{flexDirection:'row',marginTop:10}}>
+    <Divider style={{backgroundColor:sty.themehui,height:1}}/>
+    <View style={styles.line}>
             <Text style={{fontSize:18,}}>愿 付 酬 劳  :</Text>
-            <TextInput style={[styles.input,{width:sty.w*.6}]} multiline={true} placeholder={'请输入联系信息'}/>
+            <TextInput style={[styles.input,{width:sty.w*.6,}]}
+            //  multiline={true} 
+             placeholder={'请输入酬劳'}
+             onChangeText={(money)=>{
+               this.setState({money})
+             }}
+             />
            
    </View>
    {/*  */}
-   <Divider style={{backgroundColor:sty.themehui,height:1,marginTop:10}}/>
+   <Divider style={{backgroundColor:sty.themehui,height:1}}/>
    <TouchableOpacity onPress={()=>{
 this.refs.toast.show('目前仅支持线下支付',1000);
    }}>
@@ -254,7 +327,7 @@ this.refs.toast.show('目前仅支持线下支付',1000);
    {/* 提交 btn */}
    <Divider style={{backgroundColor:sty.themehui,height:1,marginTop:10}}/>
    <TouchableOpacity onPress={()=>{
-     
+      this.submit()
    }} style={styles.tj_btn}>
       <Text style={{fontSize:20,color:'white',fontWeight:'600'}}>提 交</Text>
    </TouchableOpacity>
@@ -265,6 +338,9 @@ this.refs.toast.show('目前仅支持线下支付',1000);
    }
 }
 const styles = StyleSheet.create({
+  line:{
+    flexDirection:'row',height:sty.h*.06,alignItems:'center'
+  },
   tj_btn:{
     width:'100%',height:sty.h*.06,
     backgroundColor:sty.themeColor,
