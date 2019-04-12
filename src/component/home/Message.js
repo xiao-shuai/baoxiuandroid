@@ -37,8 +37,8 @@ componentWillMount(){
     render(){
         if(this.state.load){
             return(
-              <View style={{flex: 1, padding: 20}}>
-                <ActivityIndicator size={"large"}/>
+              <View style={{ height:sty.h*.6,justifyContent:'center'}}>
+                <ActivityIndicator size={"large"} color={sty.themeColor}/>
               </View>
             )
           }

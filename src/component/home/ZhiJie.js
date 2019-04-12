@@ -20,6 +20,7 @@ import ImagePicker from 'react-native-image-picker'
 import Picker from 'react-native-picker';
 import DatePicker from 'react-native-datepicker'
 import Toast, {DURATION} from 'react-native-easy-toast'
+import Parse from 'parse/react-native'
 @inject(["homeStore"])
 @observer // 监听当前组件
 class ZhiJie extends Component{
@@ -30,6 +31,7 @@ class ZhiJie extends Component{
    constructor(props){
        super(props)
        this.state={
+        isloading:true,
         iscover:false,
         date:"",
         order:[]
@@ -63,19 +65,28 @@ class ZhiJie extends Component{
    }
    getdate=()=>{
     const date = new Date();
-
+    
     const year = date.getFullYear().toString();
     const month = (date.getMonth()+1).toString();
     const day = date.getDate().toString();
-    // var hour =  date.getHours().toString();
-    // var minute = date.getMinutes().toString();
     const final=year+'-'+month+'-'+day
-    this.setState({date:final})
+    this.setState({date:final,showdate:final})
    
    }
+  getdata=()=>{
+    fetch('https://easy-mock.com/mock/5ca20f900aa7bf50eb36bcb0/baoxiu/fenlei')
+    .then(res=>{res.json()})
+    .then(res=>{
+      this.setState({isloading:false})
+    })
+    .catch(err=>{
+      console.log('rrr',err)
+    })
+  } 
 componentWillMount(){
  
   this.getdate()
+  this.getdata()
 
 }
 choosePicker = () => {
@@ -155,15 +166,36 @@ submit=()=>{
       if(this.state.phone.length!==11){
         this.refs.toast.show('请输入正确的手机号码',1500)
       }else{
-        //  this.state.order.push(data)
-         this.props.homeStore.updateorder(data)
-         this.props.navigation.navigate('MyOrder')
-        this.refs.toast.show('预约成功',1500)
+         fetch('https://easy-mock.com/mock/5ca20f900aa7bf50eb36bcb0/baoxiu/order',{
+           method:'POST',
+           headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+         }).then(res=>{
+          this.props.homeStore.updateorder(data)
+          this.props.navigation.navigate('MyOrder')
+         this.refs.toast.show('预约成功',1500)
+         }).catch(err=>{
+             console.log('err??',err)
+         })
+         
       }
   }
 
 }
    render(){
+    if(this.state.isloading){
+      return (
+        <View style={{
+          width:sty.w,height:sty.h*.8,
+        alignItems:'center',
+        justifyContent:'center',
+        }}>
+          <ActivityIndicator size={"large"} color={sty.themeColor}/>
+        </View>
+      )
+    }
     console.log(
     'order---!',this.props.homeStore.order,)
      const type=this.props.navigation.getParam('info')
@@ -218,7 +250,7 @@ submit=()=>{
         mode="date"
         placeholder="select date"
         format="YYYY-MM-DD"
-        minDate="2018-05-01"
+        minDate= {this.state.showdate}
         maxDate="2020-06-01"
         confirmBtnText="确定"
         cancelBtnText="取消"
@@ -290,7 +322,7 @@ this.state.iscover2?
    <Divider style={{backgroundColor:sty.themehui,height:1,marginTop:10}}/>
    {/*  */}
    <View style={styles.line}>
-            <Text style={{fontSize:18,}}>联 系 方 式 :</Text>
+            <Text style={{fontSize:18,}}>联 系 电 话 :</Text>
             <TextInput style={[styles.input,{width:sty.w*.6}]} 
             // multiline={true} 
             placeholder={'请输入联系信息'}

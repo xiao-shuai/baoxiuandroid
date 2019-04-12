@@ -7,16 +7,18 @@ import {
     ScrollView,
     StyleSheet,
     ActivityIndicator,
-    TextInput
+    TextInput,AsyncStorage
 } from 'react-native'
 import {inject,observer} from 'mobx-react'
 import {observable} from 'mobx'
-import { SafeAreaView } from 'react-navigation';
+import { SafeAreaView,NavigationActions } from 'react-navigation';
 import { Divider,Overlay } from 'react-native-elements'
 import LinearGradient from 'react-native-linear-gradient';
 import {sty} from '../config/styles'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Toast, {DURATION} from 'react-native-easy-toast'
+import Parse from 'parse/react-native'
+
 class Login extends  Component{
     constructor(props){
         super(props)
@@ -25,6 +27,19 @@ class Login extends  Component{
         }
     }
 
+ login=()=>{
+     console.log('zh?',this.state.zh,'mm',this.state.mm)
+
+    Parse.User.logIn(this.state.zh,this.state.mm).then(res=>{
+        console.log('res--logookok!!',res)
+        AsyncStorage.setItem('dl','ok')
+        this.props.navigation.reset([NavigationActions.navigate({ routeName: 'Home' })], 0)
+
+    }).catch(err=>{
+       console.log('logo err--!',err)
+    })
+ } 
+    
   render(){
       return(
           <SafeAreaView style={{flex:1,alignItems:'center'}}>
@@ -66,7 +81,7 @@ class Login extends  Component{
                 </View>
 
                 <TouchableOpacity onPress={()=>{
-
+this.login()
                 }}>
                 <View style={[ys.input,{
                 backgroundColor:sty.themeColor,
@@ -80,14 +95,14 @@ class Login extends  Component{
                 </TouchableOpacity>
                 {/*  */}
                 <TouchableOpacity onPress={()=>{
-
+               
                 }}>
                  <Text style={{color:sty.themeColor,marginTop:10,marginLeft:'75%'}}>忘记密码?</Text>
                  </TouchableOpacity>
 
               </View>
           </ScrollView>
-          <Overlay overlayStyle={{}} visible={this.state.visable}> 
+          <Overlay overlayStyle={{}} isVisible ={this.state.visable} > 
           </Overlay>
           </SafeAreaView>
       )

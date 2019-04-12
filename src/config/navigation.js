@@ -112,7 +112,13 @@ const AllStack=createStackNavigator({
         headerBackTitle:null,
     })
     },
-     
+    Home:{
+      screen:Home,
+      navigationOptions:()=>({
+          header:null,
+          headerBackTitle:null,
+      })
+   },
      
      HomeDetail:{
        screen:HomeDetail,

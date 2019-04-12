@@ -36,6 +36,16 @@ class HomeDetail  extends Component{
         ]
         
     }
+    componentWillMount(){
+        fetch('https://easy-mock.com/mock/5ca20f900aa7bf50eb36bcb0/baoxiu/fenlei')
+        .then(res=>res.json())
+        .then(res=>{
+            console.log('res---?',res)
+        })
+        .catch(err=>{
+            console.log('err--?',err)
+        })
+    }
     render(){
         return(
        <SafeAreaView style={sty.contain}>

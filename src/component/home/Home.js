@@ -18,16 +18,26 @@ import LinearGradient from 'react-native-linear-gradient';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Swiper from 'react-native-swiper';
+import Parse from 'parse/react-native'
 @inject(["homeStore"])
 @observer // 监听当前组件
 class Home extends  Component{
     constructor(props){
         super(props)
         this.state={
-
+           isloading:true
         }
     }
 componentWillMount(){
+  let branch=Parse.Object.extend('branch')
+  let  data = new Parse.Query(branch)
+   data.find().then(res=>{
+       console.log('res---ooo!',res)
+       this.setState({isloading:false})    
+   }).catch(err=>{
+     console.log('err--!',err)
+   })
+
   AsyncStorage.getItem('dl').then(res=>{
    console.log('qqqq!!',res)
    if(res==null){
@@ -40,6 +50,17 @@ componentWillMount(){
 }
   render(){
       console.log('666---!',this.props.homeStore.text)
+      if(this.state.isloading){
+        return (
+          <View style={{
+            width:sty.w,height:sty.h*.8,
+          alignItems:'center',
+          justifyContent:'center',
+          }}>
+            <ActivityIndicator size={"large"} color={sty.themeColor}/>
+          </View>
+        )
+      }
       return(
           <SafeAreaView style={sty.contain}>
           {/* top */}
@@ -49,10 +70,14 @@ componentWillMount(){
             // this.props.navigation.openDrawer()
            }}>
             <Ionicons name={'ios-options'} size={30}/>
-          </TouchableOpacity>
-         
-            <Text style={{fontSize:25,color:sty.themeColor}}>快修</Text>
-      
+          </TouchableOpacity >
+           
+           <TouchableOpacity onPress={()=>{
+            //  AsyncStorage.removeItem('dl')
+           }}>
+            <Text style={{fontSize:25,color:sty.themeColor}}>Fast Repair</Text>
+            </TouchableOpacity>
+
             <TouchableOpacity onPress={()=>{
               this.props.navigation.navigate('Message')
             }}>
@@ -63,15 +88,15 @@ componentWillMount(){
         {/*  */}
             
           <ScrollView contentContainerStyle={{}}>
-           <Text style={{fontSize:16,textAlign:'center',color:sty.themehui2,marginTop:5}}>北京市昌平区科星西路龙跃小区</Text>
+           {/* <Text style={{fontSize:16,textAlign:'center',color:sty.themehui2,marginTop:5}}>北京市昌平区科星西路龙跃小区</Text> */}
           {/*  */}
           
           <Swiper style={{marginTop:10}} autoplay={true} loop={true} height={200}> 
           <View style={styles.slide}>
-          <Image source={require('../../img/1.png')} style={styles.image} resizeMode='stretch'/>
+          <Image source={require('../../img/2.png')} style={styles.image} resizeMode='stretch'/>
           </View>
            <View style={styles.slide}>
-           <Image source={require('../../img/2.png')} style={styles.image} resizeMode='stretch'/>
+           <Image source={require('../../img/1.png')} style={styles.image} resizeMode='stretch'/>
            </View>
            
           </Swiper>
