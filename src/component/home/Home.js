@@ -73,7 +73,7 @@ componentWillMount(){
           </TouchableOpacity >
            
            <TouchableOpacity onPress={()=>{
-            //  AsyncStorage.removeItem('dl')
+             AsyncStorage.removeItem('dl')
            }}>
             <Text style={{fontSize:25,color:sty.themeColor}}>Fast Repair</Text>
             </TouchableOpacity>

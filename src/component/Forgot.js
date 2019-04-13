@@ -7,6 +7,7 @@ import {
     ScrollView,
     StyleSheet,
     ActivityIndicator,
+    KeyboardAvoidingView,
     TextInput,AsyncStorage
 } from 'react-native'
 import {inject,observer} from 'mobx-react'
@@ -18,8 +19,9 @@ import {sty} from '../config/styles'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Toast, {DURATION} from 'react-native-easy-toast'
 import Parse from 'parse/react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
-class Login extends  Component{
+class Forgot extends  Component{
     constructor(props){
         super(props)
         this.state={
@@ -29,24 +31,29 @@ class Login extends  Component{
 
  login=()=>{
      console.log('zh?',this.state.zh,'mm',this.state.mm)
-  
-   if(this.state.zh==undefined){
-       this.refs.toast.show('请输入账号',1500)
-   } else if(this.state.mm==undefined){
-    this.refs.toast.show('请输入密码',1500)
-   }else {
-    Parse.User.logIn(this.state.zh,this.state.mm).then(res=>{
-        console.log('res--logookok!!',res)
-        AsyncStorage.setItem('dl','ok')
-        this.props.navigation.reset([NavigationActions.navigate({ routeName: 'Home' })], 0)
-
-    }).catch(err=>{
-        this.refs.toast.show('请输入正确的账号或密码',1500)
-       console.log('logo err--!',err)
-    })
-   }
-
-
+     if(this.state.zh==undefined){
+      this.refs.toast.show('请输入账号',1500)
+     }else if (this.state.mm==undefined){
+        this.refs.toast.show('请输入密码',1500)
+     }else if (this.state.email==undefined){
+        this.refs.toast.show('请输入邮箱',1500)
+     }else{
+      fetch('https://easy-mock.com/mock/5ca20f900aa7bf50eb36bcb0/baoxiu/order',{
+         method:'POST',
+         headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+     }).then(res=>{
+    //    console.log('res?',res)
+      this.refs.toast.show('提交成功,我们将在1-3个工作日联系你',1500)
+     }
+     ).catch(err=>{
+       console.log('err?',err)
+     }
+     )
+     }
+   
  } 
     
   render(){
@@ -58,9 +65,13 @@ class Login extends  Component{
                 <Text style={{fontSize:20,color:'white',marginTop:sty.h*.06,letterSpacing:2}}>便捷生活 快乐你我</Text>
                 <Image source={require('../img/logobai.png')} style={{width:sty.w*.6,height:sty.w*.6}}/>
               </LinearGradient>
+              <KeyboardAvoidingView  
+              behavior="padding"
+             keyboardVerticalOffset={250}
+      >
               <View style={{
                   width:sty.w*.9,
-                height:sty.h*.3,
+                // height:sty.h*.3,
                 backgroundColor:'white',
                 shadowColor:'#feb47b',
                 shadowOffset:{width:0,height:6},
@@ -79,39 +90,44 @@ class Login extends  Component{
                     }}/>
                 </View>
                 <View style={ys.input}>
-                    <Ionicons name={'ios-lock'} size={25} color={'#feb47b'}/>
+                    <Ionicons name={'ios-call'} size={23} color={'#feb47b'}/>
                     <TextInput style={ys.textin}
-                     placeholder="请输入密码" 
+                     placeholder="请输入电话" 
                     secureTextEntry={true} 
                     onChangeText={(mm)=>{
                     this.setState({mm})
                     }}
                     />
                 </View>
+                <View style={ys.input}>
+                    <Ionicons name={'ios-mail'} size={25} color={'#feb47b'}/>
+                    <TextInput style={ys.textin}
+                     placeholder="请输入邮箱" 
+                    secureTextEntry={true} 
+                    onChangeText={(email)=>{
+                    this.setState({email})
+                    }}
+                    />
+                </View>
 
                 <TouchableOpacity onPress={()=>{
-this.login()
+              this.login()
                 }}>
                 <View style={[ys.input,{
                 backgroundColor:sty.themeColor,
                 alignItems:'center',
                 justifyContent:'center',
                 width:'90%',marginLeft:'5%',
-                borderRadius:5
+                borderRadius:5,
+                marginBottom:10
                 }]}>
-                    <Text style={{fontSize:18,letterSpacing:1,color:'white'}}>登录</Text>
+                    <Text style={{fontSize:18,letterSpacing:1,color:'white'}}>确认</Text>
                 </View> 
                 </TouchableOpacity>
-                {/*  */}
-                <TouchableOpacity onPress={()=>{
-                //   this.setState({visable:true})
-                this.props.navigation.navigate('Forgot')
-
-                }}>
-                 <Text style={{color:sty.themeColor,marginTop:10,marginLeft:'75%'}}>忘记密码?</Text>
-                 </TouchableOpacity>
+                
 
               </View>
+              </KeyboardAvoidingView>
           </ScrollView>
           <Toast
 
@@ -143,4 +159,4 @@ const ys=StyleSheet.create({
         borderBottomWidth:1
     },
 })
-export default Login
+export default Forgot

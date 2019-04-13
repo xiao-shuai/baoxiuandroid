@@ -21,6 +21,8 @@ import Picker from 'react-native-picker';
 import DatePicker from 'react-native-datepicker'
 import Toast, {DURATION} from 'react-native-easy-toast'
 import Parse from 'parse/react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
 @inject(["homeStore"])
 @observer // 监听当前组件
 class ZhiJie extends Component{
@@ -203,6 +205,7 @@ submit=()=>{
      console.log('type--!',type)
        return(
        <SafeAreaView style={{flex:1,alignItems:'center'}}>
+       <KeyboardAwareScrollView>
         <ScrollView style={{width:sty.w*.95,}} showsVerticalScrollIndicator={false}>
 {/* city */}
       <View>
@@ -364,6 +367,8 @@ this.refs.toast.show('目前仅支持线下支付',1000);
       <Text style={{fontSize:20,color:'white',fontWeight:'600'}}>提 交</Text>
    </TouchableOpacity>
         </ScrollView>
+       
+        </KeyboardAwareScrollView> 
         <Toast ref="toast" position='top' opacity={0.7} />
        </SafeAreaView>
        )

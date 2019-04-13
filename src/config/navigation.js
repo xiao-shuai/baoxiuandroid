@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import {Home,Me,
   HomeDetail,Message,
   ZhiJie,JiaDian,FenLei,
- Contact,FeedBack,MyOrder,Login
+ Contact,FeedBack,MyOrder,Login,Forgot
 } from '../component/index'
 import { 
      createBottomTabNavigator,
@@ -143,7 +143,7 @@ const AllStack=createStackNavigator({
     ZhiJie:{
       screen:ZhiJie,
       navigationOptions:()=>({
-         title:'快修',
+         title:'Fast Repair',
          headerTintColor:'white',
          headerStyle: {
           backgroundColor:sty.themeColor,
@@ -153,7 +153,7 @@ const AllStack=createStackNavigator({
     JiaDian:{
       screen:JiaDian,
       navigationOptions:()=>({
-         title:'快修',
+         title:'Fast Repair',
          headerTintColor:'white',
          headerStyle: {
           backgroundColor:sty.themeColor,
@@ -204,6 +204,17 @@ const AllStack=createStackNavigator({
       screen:FeedBack,
       navigationOptions:()=>({
         title:'我的反馈',
+        headerTintColor:'white',
+        headerStyle: {
+         backgroundColor:sty.themeColor,
+       },  
+       
+  })
+    },
+    Forgot:{
+      screen:Forgot,
+      navigationOptions:()=>({
+        title:'找回密码',
         headerTintColor:'white',
         headerStyle: {
          backgroundColor:sty.themeColor,

@@ -9,6 +9,7 @@ import Contact from './me/Contact'
 import FeedBack from './me/FeedBack'
 import MyOrder from './me/MyOrder'
 import Login from './Login'
+import Forgot from './Forgot'
 export {
     Home,
     Me,
@@ -20,5 +21,6 @@ export {
     Contact,
     FeedBack,
     MyOrder,
-    Login
+    Login,
+    Forgot
 }

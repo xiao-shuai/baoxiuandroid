@@ -52,7 +52,7 @@ class HomeDetail  extends Component{
          <ScrollView contentContainerStyle={{width:sty.w,alignItems:'center'}}>
            {/* <LinearGradient colors={['#F2994A','#F2C94C']}> */}
             <View style={{width:'100%',height:sty.h*.25,alignItems:'center',justifyContent:'center'}}>
-            <Image source={require('../../img/logo.png')} style={{width:sty.w*.8,height:sty.w*.8}} resizeMode="contain"/>
+            <Image source={require('../../img/logobai.png')} style={{width:sty.w*.5,height:sty.w*.5}} />
             </View>
            {/* </LinearGradient> */}
            {/*  */}
