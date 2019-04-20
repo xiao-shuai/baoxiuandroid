@@ -7,7 +7,8 @@ import {
     ScrollView,
     StyleSheet,
     ActivityIndicator,
-    AsyncStorage
+    AsyncStorage,
+    Platform,
   } from 'react-native'
 import {observable} from 'mobx'
 import { SafeAreaView ,NavigationActions} from 'react-navigation';
@@ -19,6 +20,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Swiper from 'react-native-swiper';
 import Parse from 'parse/react-native'
+
 @inject(["homeStore"])
 @observer // 监听当前组件
 class Home extends  Component{
@@ -75,7 +77,15 @@ componentWillMount(){
            <TouchableOpacity onPress={()=>{
              AsyncStorage.removeItem('dl')
            }}>
-            <Text style={{fontSize:25,color:sty.themeColor}}>Fast Repair</Text>
+            <Text style={{fontSize:25,color:sty.themeColor}}>
+            {
+              Platform.OS=='ios'?
+              "Fast Repair"
+              :
+              "牛牛快修"
+            }
+            
+            </Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={()=>{
@@ -92,11 +102,24 @@ componentWillMount(){
           {/*  */}
           
           <Swiper style={{marginTop:10}} autoplay={true} loop={true} height={200}> 
+         
           <View style={styles.slide}>
-          <Image source={require('../../img/2.png')} style={styles.image} resizeMode='stretch'/>
+          {
+            Platform.OS=='ios'?
+            <Image source={require('../../img/2.png')} style={styles.image} resizeMode='stretch'/>
+            :
+            <Image source={require('../../img/22.png')} style={styles.image} resizeMode='stretch'/>
+          }
+
           </View>
            <View style={styles.slide}>
-           <Image source={require('../../img/1.png')} style={styles.image} resizeMode='stretch'/>
+           {
+             Platform.OS=='ios'?
+             <Image source={require('../../img/1.png')} style={styles.image} resizeMode='stretch'/>
+             :
+             <Image source={require('../../img/11.png')} style={styles.image} resizeMode='stretch'/>
+           }
+         
            </View>
            
           </Swiper>

@@ -10,6 +10,7 @@ import FeedBack from './me/FeedBack'
 import MyOrder from './me/MyOrder'
 import Login from './Login'
 import Forgot from './Forgot'
+import ZhuCe from './ZhuCe'
 export {
     Home,
     Me,
@@ -22,5 +23,6 @@ export {
     FeedBack,
     MyOrder,
     Login,
-    Forgot
+    Forgot,
+    ZhuCe
 }

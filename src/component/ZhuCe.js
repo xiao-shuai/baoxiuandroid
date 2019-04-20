@@ -21,7 +21,7 @@ import Toast, {DURATION} from 'react-native-easy-toast'
 import Parse from 'parse/react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
-class Forgot extends  Component{
+class ZhuCe extends  Component{
     constructor(props){
         super(props)
         this.state={
@@ -36,8 +36,10 @@ class Forgot extends  Component{
      }else if (this.state.mm==undefined){
         this.refs.toast.show('请输入密码',1500)
      }else if (this.state.email==undefined){
-        this.refs.toast.show('请输入邮箱',1500)
-     }else{
+        this.refs.toast.show('请确认密码',1500)
+     }else if(this.state.mm!==this.state.email){
+        this.refs.toast.show('账号密码不一致',1500)
+     } else  {
       fetch('https://easy-mock.com/mock/5ca20f900aa7bf50eb36bcb0/baoxiu/order',{
          method:'POST',
          headers: {
@@ -46,7 +48,9 @@ class Forgot extends  Component{
           },
      }).then(res=>{
     //    console.log('res?',res)
-      this.refs.toast.show('提交成功,我们将在1-3个工作日联系你',1500)
+      this.refs.toast.show('注册成功',1500)
+      AsyncStorage.setItem('dl','ok')
+      this.props.navigation.reset([NavigationActions.navigate({ routeName: 'Home' })], 0)
      }
      ).catch(err=>{
        console.log('err?',err)
@@ -104,8 +108,8 @@ class Forgot extends  Component{
                     <Ionicons name={'ios-call'} size={23} color={'#feb47b'}/>
                 </View>
                     <TextInput style={ys.textin}
-                     placeholder="请输入电话" 
-                    // secureTextEntry={true} 
+                     placeholder="请输入密码" 
+                    secureTextEntry={true} 
                     onChangeText={(mm)=>{
                     this.setState({mm}) 
                     }}
@@ -116,8 +120,8 @@ class Forgot extends  Component{
                     <Ionicons name={'ios-mail'} size={25} color={'#feb47b'}/>
                   </View>
                     <TextInput style={ys.textin}
-                     placeholder="请输入邮箱" 
-                    // secureTextEntry={true} 
+                     placeholder="请确认密码" 
+                    secureTextEntry={true} 
                     onChangeText={(email)=>{
                     this.setState({email})
                     }}
@@ -133,7 +137,8 @@ class Forgot extends  Component{
                 justifyContent:'center',
                 width:'90%',marginLeft:'5%',
                 borderRadius:5,
-                marginBottom:10
+                marginBottom:10,
+                marginTop:10
                 }]}>
                     <Text style={{fontSize:18,letterSpacing:1,color:'white'}}>确认</Text>
                 </View> 
@@ -173,9 +178,9 @@ const ys=StyleSheet.create({
         flexDirection:'row',
         alignItems:'center',
         // padding:10,
-        marginTop:10,
+        // marginTop:10,
         borderBottomColor:sty.themehui,
         borderBottomWidth:1
     },
 })
-export default Forgot
+export default ZhuCe
