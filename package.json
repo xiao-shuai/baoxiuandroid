@@ -10,6 +10,7 @@
   "dependencies": {
     "jcore-react-native": "^1.3.2",
     "jpush-react-native": "^2.5.3",
+    "leancloud-storage": "^3.13.0",
     "mobx": "^5.9.4",
     "mobx-react": "^5.4.3",
     "parse": "^2.3.2",

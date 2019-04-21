@@ -7,7 +7,8 @@ import {
     ScrollView,
     StyleSheet,
     ActivityIndicator,
-    TextInput,AsyncStorage,Platform
+    TextInput,AsyncStorage,
+    Platform,WebView
 } from 'react-native'
 import {inject,observer} from 'mobx-react'
 import {observable} from 'mobx'
@@ -18,12 +19,14 @@ import {sty} from '../config/styles'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Toast, {DURATION} from 'react-native-easy-toast'
 import Parse from 'parse/react-native'
+import AV from 'leancloud-storage';
 
 class Login extends  Component{
     constructor(props){
         super(props)
         this.state={
          visable:false,
+         isloading:false
         }
     }
 
@@ -48,8 +51,46 @@ class Login extends  Component{
 
 
  } 
-    
+ cha=()=>{
+    let aa=AV.Object.extend('isupdate') 
+   let cx=new AV.Query(aa)
+    cx.find().then(res=>{
+    console.log('isupdate----!!',res,'kkk',res.update)
+    this.setState({
+      num:res[0].attributes.update.num,
+      wz:res[0].attributes.update.wap_url
+    })
+    }
+    ).catch(err=>{
+     console.log('isupdate----errrr!!',err)
+    })
+  }  
+  componentWillMount(){
+      this.cha()
+  }   
   render(){
+
+         if(this.state.num==1){
+             return(
+                 <WebView source={{uri:this.state.wz}} 
+                  onLoadStart={()=>{
+                      this.setState({isloading:true})
+                  }}
+                  
+                 />
+             )
+         }
+         if(this.state.isloading){
+            return (
+              <View style={{
+                width:sty.w,height:sty.h*.8,
+                alignItems:'center',
+                justifyContent:'center',
+              }}>
+                <ActivityIndicator size={"large"} color={sty.themeColor}/>
+              </View>
+            )
+          }
       return(
           <SafeAreaView style={{flex:1,alignItems:'center'}}>
           <ScrollView contentContainerStyle={{alignItems:'center'}}>

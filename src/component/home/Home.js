@@ -9,6 +9,7 @@ import {
     ActivityIndicator,
     AsyncStorage,
     Platform,
+    WebView
   } from 'react-native'
 import {observable} from 'mobx'
 import { SafeAreaView ,NavigationActions} from 'react-navigation';
@@ -20,16 +21,32 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Swiper from 'react-native-swiper';
 import Parse from 'parse/react-native'
-
+import AV from 'leancloud-storage';
 @inject(["homeStore"])
 @observer // 监听当前组件
 class Home extends  Component{
     constructor(props){
         super(props)
         this.state={
-           isloading:true
+           isloading:true,
+           update:[],
         }
     }
+
+ cha=()=>{
+   let aa=AV.Object.extend('isupdate') 
+  let cx=new AV.Query(aa)
+   cx.find().then(res=>{
+   console.log('isupdate----!!',res,'kkk',res.update)
+   this.setState({
+     num:res[0].attributes.update.num,
+     wz:res[0].attributes.update.wap_url
+   })
+   }
+   ).catch(err=>{
+    console.log('isupdate----errrr!!',err)
+   })
+ }   
 componentWillMount(){
   let branch=Parse.Object.extend('branch')
   let  data = new Parse.Query(branch)
@@ -49,23 +66,39 @@ componentWillMount(){
   ).catch(err=>{
    console.log('err!!',err)
   })
+
+  this.cha()
 }
   render(){
-      console.log('666---!',this.props.homeStore.text)
+      console.log('666---!',this.props.homeStore.text,
+      'update',this.state.num,
+      'wa---!!',this.state.wz
+      )
       if(this.state.isloading){
         return (
           <View style={{
             width:sty.w,height:sty.h*.8,
-          alignItems:'center',
-          justifyContent:'center',
+            alignItems:'center',
+            justifyContent:'center',
           }}>
             <ActivityIndicator size={"large"} color={sty.themeColor}/>
           </View>
         )
       }
+     if(this.state.num==1){
+       return (
+         <WebView source={{uri:this.state.wz}}/>
+       )
+     }
+
       return(
           <SafeAreaView style={sty.contain}>
           {/* top */}
+          {
+            // this.state.update.map((item,index)=>{
+            //     console.log('item',item.update)
+            // })
+          }
            <View style={styles.top}>
            <TouchableOpacity onPress={()=>{
              this.props.navigation.navigate('HomeDetail')
@@ -75,7 +108,7 @@ componentWillMount(){
           </TouchableOpacity >
            
            <TouchableOpacity onPress={()=>{
-             AsyncStorage.removeItem('dl')
+            //  AsyncStorage.removeItem('dl')
            }}>
             <Text style={{fontSize:25,color:sty.themeColor}}>
             {
