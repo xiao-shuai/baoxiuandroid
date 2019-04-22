@@ -8,7 +8,8 @@ import {
     StyleSheet,
     ActivityIndicator,
     TextInput,AsyncStorage,
-    Platform,WebView
+    Platform,
+    ProgressBarAndroid
 } from 'react-native'
 import {inject,observer} from 'mobx-react'
 import {observable} from 'mobx'
@@ -20,13 +21,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Toast, {DURATION} from 'react-native-easy-toast'
 import Parse from 'parse/react-native'
 import AV from 'leancloud-storage';
-
+import {WebView} from "react-native-webview";
 class Login extends  Component{
     constructor(props){
         super(props)
         this.state={
          visable:false,
-         isloading:false
+         progress: 0,
         }
     }
 
@@ -69,31 +70,38 @@ class Login extends  Component{
       this.cha()
   }   
   render(){
-
+        
          if(this.state.num==1){
              return(
+                 <View style={{flex:1}}>
+                 {this.state.progress !== 1 && 
+                 <ProgressBarAndroid
+                    //这是进度条颜色
+                    color="red"
+                    style={{marginTop:sty.h*.4}}
+                    progress={this.state.progress}
+                    
+                    />
+                    
+                    }
+
                  <WebView source={{uri:this.state.wz}} 
-                  onLoadStart={()=>{
-                      this.setState({isloading:true})
-                  }}
-                  
+                  //设置进度 progress值为0～1
+                  onLoadProgress={({nativeEvent}) => this.setState(
+                    {progress: nativeEvent.progress}
+                )}                  
                  />
+                 </View>
              )
          }
-         if(this.state.isloading){
-            return (
-              <View style={{
-                width:sty.w,height:sty.h*.8,
-                alignItems:'center',
-                justifyContent:'center',
-              }}>
-                <ActivityIndicator size={"large"} color={sty.themeColor}/>
-              </View>
-            )
-          }
+         
+         
       return(
+        
           <SafeAreaView style={{flex:1,alignItems:'center'}}>
+          
           <ScrollView contentContainerStyle={{alignItems:'center'}}>
+          
               <LinearGradient colors={['#ff7e5f','#feb47b']} 
               style={{width:sty.w,height:sty.h*.45,alignItems:'center'}}>
                 <Text style={{fontSize:20,color:'white',marginTop:sty.h*.06,letterSpacing:2}}>便捷生活 快乐你我</Text>

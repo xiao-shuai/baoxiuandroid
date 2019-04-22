@@ -9,7 +9,7 @@ import {
     ActivityIndicator,
     AsyncStorage,
     Platform,
-    WebView
+    ProgressBarAndroid
   } from 'react-native'
 import {observable} from 'mobx'
 import { SafeAreaView ,NavigationActions} from 'react-navigation';
@@ -22,6 +22,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Swiper from 'react-native-swiper';
 import Parse from 'parse/react-native'
 import AV from 'leancloud-storage';
+import {WebView} from "react-native-webview";
 @inject(["homeStore"])
 @observer // 监听当前组件
 class Home extends  Component{
@@ -86,9 +87,26 @@ componentWillMount(){
         )
       }
      if(this.state.num==1){
-       return (
-         <WebView source={{uri:this.state.wz}}/>
-       )
+      return(
+        <View style={{flex:1}}>
+        {this.state.progress !== 1 && 
+        <ProgressBarAndroid
+           //这是进度条颜色
+           color="red"
+           style={{marginTop:sty.h*.4}}
+           progress={this.state.progress}
+           />
+           
+           }
+
+        <WebView source={{uri:this.state.wz}} 
+         //设置进度 progress值为0～1
+         onLoadProgress={({nativeEvent}) => this.setState(
+           {progress: nativeEvent.progress}
+       )}                  
+        />
+        </View>
+    )
      }
 
       return(
