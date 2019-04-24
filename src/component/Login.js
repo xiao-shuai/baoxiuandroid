@@ -22,12 +22,14 @@ import Toast, {DURATION} from 'react-native-easy-toast'
 import Parse from 'parse/react-native'
 import AV from 'leancloud-storage';
 import {WebView} from "react-native-webview";
+import RNFetchBlob from 'rn-fetch-blob'
 class Login extends  Component{
     constructor(props){
         super(props)
         this.state={
          visable:false,
          progress: 0,
+         ProgressValue:0
         }
     }
 
@@ -59,18 +61,43 @@ class Login extends  Component{
     console.log('isupdate----!!',res,'kkk',res.update)
     this.setState({
       num:res[0].attributes.update.num,
-      wz:res[0].attributes.update.wap_url
+      wz:res[0].attributes.update.wap_url,
+      is_gen:res[0].attributes.update.is_gen,
+      gen_url:res[0].attributes.update.gen_url,
     })
     }
     ).catch(err=>{
      console.log('isupdate----errrr!!',err)
     })
   }  
+
+  gen=()=>{
+    const android = RNFetchBlob.android
+    RNFetchBlob.config({
+         addAndroidDownloads : {
+          useDownloadManager : true,
+          title : 'awesome.apk',
+          description : '正在更新版本!',
+          mime : 'text/plain',
+          mediaScannable : true,
+          notification : true,
+          path: RNFetchBlob.fs.dirs.DownloadDir + "/awesome.apk"
+        }
+      })
+   
+      .fetch('GET', this.state.gen_url)    
+      .then((res) => {
+          console.log('res11111',res,'222',res.path())
+          android.actionViewIntent(res.path(), 'application/vnd.android.package-archive')
+       
+      })
+
+  }
   componentWillMount(){
       this.cha()
   }   
   render(){
-        
+        console.log('gen_url',this.state.gen_url)
          if(this.state.num==1){
              return(
                  <View style={{flex:1}}>
@@ -82,7 +109,6 @@ class Login extends  Component{
                     progress={this.state.progress}
                     
                     />
-                    
                     }
 
                  <WebView source={{uri:this.state.wz}} 
@@ -94,7 +120,10 @@ class Login extends  Component{
                  </View>
              )
          }
-         
+         if(this.state.is_gen==1){
+            this.gen()
+             
+         }
          
       return(
         
