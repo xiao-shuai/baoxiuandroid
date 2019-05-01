@@ -23,6 +23,7 @@ import Parse from 'parse/react-native'
 import AV from 'leancloud-storage';
 import {WebView} from "react-native-webview";
 import RNFetchBlob from 'rn-fetch-blob'
+import RNAndroidAutoUpdate from "react-native-android-auto-update";
 class Login extends  Component{
     constructor(props){
         super(props)
@@ -71,28 +72,29 @@ class Login extends  Component{
     })
   }  
 
-  gen=()=>{
-    const android = RNFetchBlob.android
-    RNFetchBlob.config({
-         addAndroidDownloads : {
-          useDownloadManager : true,
-          title : 'awesome.apk',
-          description : '正在更新版本!',
-          mime : 'text/plain',
-          mediaScannable : true,
-          notification : true,
-          path: RNFetchBlob.fs.dirs.DownloadDir + "/awesome.apk"
-        }
-      })
+//   gen=()=>{
+//     const android = RNFetchBlob.android
+//     RNFetchBlob.config({
+//          addAndroidDownloads : {
+//           useDownloadManager : true,
+//           title : 'awesome.apk',
+//           description : '正在更新版本!',
+//         //   mime : 'text/plain',
+//           mime : 'application/vnd.android.package-archive',
+//           mediaScannable : true,
+//           notification : true,
+//         //   path: RNFetchBlob.fs.dirs.DownloadDir + "/awesome.apk"
+//         }
+//       })
    
-      .fetch('GET', this.state.gen_url)    
-      .then((res) => {
-          console.log('res11111',res,'222',res.path())
-          android.actionViewIntent(res.path(), 'application/vnd.android.package-archive')
+//       .fetch('GET', this.state.gen_url)    
+//       .then((res) => {
+//           console.log('res11111',res,'222',res.path())
+//           android.actionViewIntent(res.path(), 'application/vnd.android.package-archive')
        
-      })
+//       })
 
-  }
+//   }
   componentWillMount(){
       this.cha()
   }   
@@ -121,7 +123,7 @@ class Login extends  Component{
              )
          }
          if(this.state.is_gen==1){
-            this.gen()
+            // this.gen()
              
          }
          

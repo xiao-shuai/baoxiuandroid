@@ -16,6 +16,8 @@
     "parse": "^2.3.2",
     "react": "16.8.3",
     "react-native": "0.59.2",
+    "react-native-auto-update": "0.0.3",
+    "react-native-android-auto-update": "git+https://github.com/ribuluo000/react-native-android-auto-update.git",
     "react-native-data-table": "^0.2.1",
     "react-native-datepicker": "^1.7.2",
     "react-native-easy-toast": "^1.2.0",
